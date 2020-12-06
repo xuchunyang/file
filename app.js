@@ -3,6 +3,10 @@ const express = require("express");
 const morgan = require("morgan");
 const multer = require("multer");
 const fs = require("fs");
+const rateLimit = require("express-rate-limit");
+
+// public url
+let SERVER_URL;
 
 const app = express();
 
@@ -10,6 +14,25 @@ app.set("x-powered-by", false);
 app.set("trust proxy", 1);
 
 app.use(morgan("dev"));
+
+app.get("/", (req, res) => {
+  const body = `\
+# 文件存储
+
+## 使用方法
+
+    $ curl --form file=@/path/to/file ${SERVER_URL}
+
+TODO
+
+## 使用限制
+
+1. 单个文件最大 5 * 1024 * 1024 bytes （5 MiB）
+2. 一次请求最多上传 10 个文件
+3. 一分钟内最多上传 30 次
+`;
+  res.set("content-type", "text/markdown").end(body);
+});
 
 fs.mkdirSync("files", { recursive: true });
 let id = fs.readdirSync("files").length;
@@ -21,9 +44,19 @@ const storage = multer.diskStorage({
     cb(null, filename);
   },
 });
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+});
 
-app.post("/", upload.array("file", 10), (req, res) => {
+const uploadLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 30,
+});
+
+app.post("/", uploadLimiter, upload.array("file", 10), (req, res) => {
   debug("req.headers: %O", req.headers);
   debug("req.files: %O", req.files);
   debug("req.body: %O", req.body);
@@ -55,5 +88,3 @@ const server = app.listen(
     console.log(`Listening at ${SERVER_URL}/`);
   }
 );
-
-let SERVER_URL;
