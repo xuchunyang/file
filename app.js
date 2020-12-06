@@ -21,9 +21,19 @@ app.get("/", (req, res) => {
 
 ## 使用方法
 
-    $ curl --form file=@/path/to/file ${SERVER_URL}
+上传一个文件：
 
-TODO
+    $ curl --form file=@1.txt https://file.cadr.xyz
+    https://file.cadr.xyz/0-1.txt
+
+    $ curl https://file.cadr.xyz/0-1.txt
+    2020-12-07
+
+同时多个文件：
+
+    $ curl --form file=@2.txt --form file=@emacs.png -L file.cadr.xyz
+    https://file.cadr.xyz/1-2.txt
+    https://file.cadr.xyz/2-emacs.png
 
 ## 使用限制
 
