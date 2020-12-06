@@ -3,6 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const multer = require("multer");
 const fs = require("fs");
+const path = require("path");
 const rateLimit = require("express-rate-limit");
 
 // public url
@@ -16,32 +17,9 @@ app.set("trust proxy", 1);
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
-  const body = `\
-# 文件存储
-
-## 使用方法
-
-上传一个文件：
-
-    $ curl --form file=@1.txt https://file.cadr.xyz
-    https://file.cadr.xyz/0-1.txt
-
-    $ curl https://file.cadr.xyz/0-1.txt
-    2020-12-07
-
-同时多个文件：
-
-    $ curl --form file=@2.txt --form file=@emacs.png -L file.cadr.xyz
-    https://file.cadr.xyz/1-2.txt
-    https://file.cadr.xyz/2-emacs.png
-
-## 使用限制
-
-1. 单个文件最大 5 * 1024 * 1024 bytes （5 MiB）
-2. 一次请求最多上传 10 个文件
-3. 一分钟内最多上传 30 次
-`;
-  res.set("content-type", "text/markdown").end(body);
+  res
+    .set("content-type", "text/markdown")
+    .sendFile(path.join(__dirname, "README.md"));
 });
 
 fs.mkdirSync("files", { recursive: true });
