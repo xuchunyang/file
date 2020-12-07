@@ -10,7 +10,7 @@
     $ curl https://file.cadr.xyz/0-1.txt
     2020-12-07
 
-同时多个文件：
+一次性上传多个文件：
 
     $ curl --form file=@2.txt --form file=@emacs.png -L file.cadr.xyz
     https://file.cadr.xyz/1-2.txt
@@ -20,7 +20,7 @@
 
 1. 单个文件最大 5 * 1024 * 1024 bytes （5 MiB）
 2. 一次请求最多上传 10 个文件
-3. 一分钟内最多上传 30 次
+3. 一分钟内最多上传 10 次
 
 ## Links
 
