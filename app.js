@@ -19,7 +19,10 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => {
   res
     .set("content-type", "text/markdown")
-    .sendFile(path.join(__dirname, "README.md"));
+    .sendFile(path.join(__dirname, "README.md"), {
+      maxAge: 24 * 3600 * 1000,
+      immutable: true,
+    });
 });
 
 fs.mkdirSync("files", { recursive: true });
