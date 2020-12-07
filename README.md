@@ -24,6 +24,6 @@
 
 ## Links
 
-1. [网址](https://file.cadr.xyz/)
-2. [源码](https://github.com/xuchunyang/file)
-3. [苏ICP备2020065056号](http://beian.miit.gov.cn/)
+1. 网址 https://file.cadr.xyz/
+2. 源码 https://github.com/xuchunyang/file
+3. 备案 [苏ICP备2020065056号](http://beian.miit.gov.cn/)
