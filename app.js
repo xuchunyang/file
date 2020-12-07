@@ -11,7 +11,7 @@ let SERVER_URL;
 
 const app = express();
 
-app.set("x-powered-by", false);
+// app.set("x-powered-by", false);
 app.set("trust proxy", 1);
 
 app.use(morgan("dev"));
