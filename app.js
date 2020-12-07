@@ -44,7 +44,7 @@ const upload = multer({
 
 const uploadLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 30,
+  max: 10,
 });
 
 app.post("/", uploadLimiter, upload.array("file", 10), (req, res) => {
