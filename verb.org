@@ -1,8 +1,0 @@
-* test                                                                 :verb:
-template http://localhost:3000
-
-** upload files
-POST /
-Content-Type: multipart/form-data; boundary=------------------------a0a877124b35be18
-
-{{foo}}
