@@ -63,6 +63,13 @@ app.post("/", uploadLimiter, upload.array("file", 10), (req, res) => {
   }
 
   if (req.headers.accept && req.headers.accept.includes("html")) {
+    // 一张图直接重定向到结果
+    if (req.files.length === 1) {
+      const file = req.files[0];
+      const url = `${SERVER_URL}/${file.filename}`;
+      res.redirect(url);
+      return;
+    }
     const body =
       "<ol>" +
       req.files
