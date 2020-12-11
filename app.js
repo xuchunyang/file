@@ -17,6 +17,13 @@ app.set("trust proxy", 1);
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
+  debug("Header Accept: %s", req.headers.accept);
+
+  if (req.headers.accept && req.headers.accept.includes("html")) {
+    res.sendFile(path.join(__dirname, "public/index.html"));
+    return;
+  }
+
   res
     .set("content-type", "text/markdown")
     .sendFile(path.join(__dirname, "README.md"), {

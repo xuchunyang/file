@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文件存储</title>
+    <style>
+      body {
+        max-width: 40em;
+        margin: 0 auto;
+        color: #333;
+      }
+
+      :root {
+        --footer-color: #666;
+      }
+
+      footer {
+        color: var(--footer-color);
+        font-size: 85%;
+        padding-top: 32px;
+        text-align: center;
+      }
+
+      footer a {
+        text-decoration: none;
+      }
+
+      footer a:link,
+      footer a:visited {
+        color: var(--footer-color);
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      form {
+        border: 1px solid #111;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>文件存储</h1>
+    <form method="post" enctype="multipart/form-data">
+      <label for="file">选择文件：</label>
+      <input id="file" name="file" type="file" required multiple />
+      <input type="submit" value="上传" />
+    </form>
+    <h2>使用方法</h2>
+    <p>上传一个文件：</p>
+    <pre><code>$ curl --form file=@1.txt https://file.cadr.xyz
+https://file.cadr.xyz/0-1.txt
+
+$ curl https://file.cadr.xyz/0-1.txt
+2020-12-07</code></pre>
+    <p>一次性上传多个文件：</p>
+    <pre><code>$ curl --form file=@2.txt --form file=@emacs.png -L file.cadr.xyz
+https://file.cadr.xyz/1-2.txt
+https://file.cadr.xyz/2-emacs.png</code></pre>
+    <h2>使用限制</h2>
+    <ol>
+      <li>单个文件最大 5 * 1024 * 1024 bytes （5 MiB）</li>
+      <li>一次请求最多上传 10 个文件</li>
+      <li>一分钟内最多发送 10 次上传请求</li>
+    </ol>
+    <footer>
+      <a href="https://github.com/xuchunyang/file">View source on GitHub</a> |
+      <a href="http://beian.miit.gov.cn/">苏ICP备2020065056号</a>
+    </footer>
+  </body>
+</html>
