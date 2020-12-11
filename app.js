@@ -62,6 +62,20 @@ app.post("/", uploadLimiter, upload.array("file", 10), (req, res) => {
     throw new Error("Missing files, you need to upload at least one file");
   }
 
+  if (req.headers.accept && req.headers.accept.includes("html")) {
+    const body =
+      "<ol>" +
+      req.files
+        .map((file) => {
+          const url = `${SERVER_URL}/${file.filename}`;
+          return `<li><a href="${url}">${url}</a></li>`;
+        })
+        .join("\n") +
+      "</ol>";
+    res.send(body);
+    return;
+  }
+
   const body = req.files
     .map((file) => {
       return `${SERVER_URL}/${file.filename}`;
